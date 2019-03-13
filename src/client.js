@@ -70,19 +70,15 @@ class Client {
    * @return {Promise} A promise with the API response
    */
   reply(message, ephemeral) {
-    // invalid ephemeral requests
-    if (!this.response_url && ephemeral) {
-      return Promise.reject("Message can't be private");
-    
     // slash commands and interactive messages
-    } else if (this.response_url) {
+    if (this.response_url) {
       if (!ephemeral) message.response_type = 'in_channel';
       return this.send(this.response_url, message);
     
     // incoming webhooks
     } else if (this.auth.incoming_webhook && !this.channel && !message.channel) {
       return this.send(this.auth.incoming_webhook.url, message);
-    
+      
     // fallback
     } else {
       return this.say(message);
