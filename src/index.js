@@ -36,6 +36,7 @@ class Slack extends EventEmitter {
    * @param {Function} callback - The Lambda callback
    */
   oauth(event, context, callback) {
+    console.log('oauth', JSON.stringify(event), JSON.stringify(context));
     let client = new Client();
     let payload = event.query;
     let save = this.store.save.bind(this.store);
