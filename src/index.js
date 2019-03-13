@@ -21,6 +21,7 @@ class Slack extends EventEmitter {
    * @param {Function} callback - The Lambda callback
    */
   handler(event, context, callback) {     
+    console.log('request', JSON.stringify(event), JSON.stringify(context));
     switch(event.method) {
       case "GET": this.oauth(event, context, callback); break;
       case "POST": this.event(event, context, callback); break;
@@ -36,7 +37,6 @@ class Slack extends EventEmitter {
    * @param {Function} callback - The Lambda callback
    */
   oauth(event, context, callback) {
-    console.log('oauth', JSON.stringify(event), JSON.stringify(context));
     let client = new Client();
     let payload = event.query;
     let save = this.store.save.bind(this.store);
